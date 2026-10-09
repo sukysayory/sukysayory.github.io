@@ -181,6 +181,7 @@ img {
 }
 
 .theme-toggle {
+  position: relative;
   display: grid;
   place-items: center;
   width: 2rem;
@@ -197,6 +198,26 @@ img {
 .theme-toggle:hover {
   color: var(--fg);
   border-color: var(--muted);
+}
+
+.theme-toggle svg {
+  grid-area: 1 / 1;
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.theme-toggle .icon-sun {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+[data-theme='dark'] .theme-toggle .icon-moon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+
+[data-theme='dark'] .theme-toggle .icon-sun {
+  opacity: 1;
+  transform: none;
 }
 
 /* ---------- hero ---------- */
@@ -652,5 +673,71 @@ img {
 
   .post-list a:hover {
     transform: none;
+  }
+}
+
+/* ---------- motion ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  body {
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  .hero,
+  .article-layout,
+  .page-title {
+    animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .post-list li,
+  .archive-list li {
+    animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .post-list li:nth-child(2),
+  .archive-list li:nth-child(2) {
+    animation-delay: 0.06s;
+  }
+  .post-list li:nth-child(3),
+  .archive-list li:nth-child(3) {
+    animation-delay: 0.12s;
+  }
+  .post-list li:nth-child(4),
+  .archive-list li:nth-child(4) {
+    animation-delay: 0.18s;
+  }
+  .post-list li:nth-child(5),
+  .archive-list li:nth-child(5) {
+    animation-delay: 0.24s;
+  }
+  .post-list li:nth-child(n + 6),
+  .archive-list li:nth-child(n + 6) {
+    animation-delay: 0.3s;
+  }
+
+  /* 主题切换：从按钮处圆形展开 */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+
+  ::view-transition-new(root) {
+    z-index: 2;
   }
 }
