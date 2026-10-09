@@ -31,14 +31,29 @@ summary: 可选。不填则自动取正文开头。
 
 全部在 `config.mjs`：站名、简介、署名、域名、导航、社交链接。标了 `TODO` 的是当前占位内容。
 
-## 部署到 GitHub Pages
+## 分支与部署
 
-`dist/` 里已是最终产物。仓库 `sukysayory.github.io` 的 `master` 分支就是 Pages 分支，所以：
+本文件夹是 git 仓库，远程指向 `sukysayory/sukysayory.github.io`，两个分支各司其职：
+
+- `source` —— 博客源码（就是这个文件夹的内容），改动后 `git push` 备份
+- `master` —— GitHub Pages 实际访问的静态产物，由 `dist/` 覆盖生成
+
+发布（在 Git Bash 里执行；嫌麻烦可以直接让助手代做这一步）：
 
 ```bash
+cd "C:/Users/27927/Documents/Qoder/2026-10-09/735eae6f"
 npm run build
-# 用 dist/ 的内容覆盖仓库工作区后提交推送
+git clone -b master https://github.com/sukysayory/sukysayory.github.io.git ../blog-deploy
+cd ../blog-deploy
+git rm -rq .                     # 清掉旧产物，历史里仍可找回
+cp -r ../735eae6f/dist/. .       # 拷入新产物
+touch .nojekyll
+git add -A
+git commit -m "更新博客"
+git push
 ```
+
+推送后 GitHub Pages 约 30 秒更新。
 
 注意：站点里用的是 `/posts/xxx/` 这样的根绝对路径，仅在项目名为 `sukysayory.github.io`（即部署在根域名）时无需改动。若换到子路径，需要给 `build.mjs` 里的链接加前缀。
 
