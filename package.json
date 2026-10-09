@@ -1,0 +1,13 @@
+{
+  "name": "sukysayory-blog",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node build.mjs && node serve.mjs",
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "marked": "^18.1.0"
+  }
+}
