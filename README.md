@@ -41,12 +41,12 @@ summary: 可选。不填则自动取正文开头。
 发布（在 Git Bash 里执行；嫌麻烦可以直接让助手代做这一步）：
 
 ```bash
-cd "C:/Users/27927/Documents/Qoder/2026-10-09/735eae6f"
+cd "C:/Users/27927/Documents/博客"
 npm run build
 git clone -b master https://github.com/sukysayory/sukysayory.github.io.git ../blog-deploy
 cd ../blog-deploy
 git rm -rq .                     # 清掉旧产物，历史里仍可找回
-cp -r ../735eae6f/dist/. .       # 拷入新产物
+cp -r "../博客/dist/." .          # 拷入新产物
 touch .nojekyll
 git add -A
 git commit -m "更新博客"

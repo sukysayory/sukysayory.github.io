@@ -99,7 +99,10 @@ function layout({ body, title, description, active, toc }) {
 <meta property="og:description" content="${esc(description || site.description)}">
 <meta property="og:type" content="website">
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){}</script>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232d6a5f'/><text x='50' y='70' font-size='60' font-family='system-ui' font-weight='600' text-anchor='middle' fill='white'>S</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f6f1e7'/><text x='50' y='74' font-size='68' font-family='Georgia,serif' font-weight='600' text-anchor='middle' fill='%23a0432c'>S</text></svg>">
+<link rel="preconnect" href="https://fonts.loli.net">
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
@@ -128,10 +131,8 @@ ${body}
 `
 }
 
-const metaLine = (post, { date = true } = {}) =>
-  `<p class="post-meta">${
-    date ? `<time datetime="${post.date.toISOString()}">${fmtDate(post.date)}</time> · ` : ''
-  }${post.minutes} 分钟阅读${
+const metaLine = (post) =>
+  `<p class="post-meta"><time datetime="${post.date.toISOString()}">${fmtDate(post.date)}</time> · ${post.minutes} 分钟阅读${
     post.tags.length
       ? ` · <span class="tags">${post.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</span>`
       : ''
@@ -143,16 +144,24 @@ const write = (dir, html) => {
 }
 
 // 首页
+const latest = posts[0]
+const updated = latest ? `${latest.date.getUTCFullYear()} 年 ${latest.date.getUTCMonth() + 1} 月` : '—'
 write(
   '',
   layout({
     active: '/',
-    body: `<section class="hero"><div class="shell"><h1>${esc(site.title)}</h1><p>${esc(site.tagline)}</p></div></section>
-<div class="shell"><ul class="post-list">
+    body: `<section class="masthead"><div class="shell">
+  <h1>${esc(site.title)}</h1>
+  <p class="masthead-tagline">${esc(site.tagline)}</p>
+  <div class="masthead-rule"><span>共 ${posts.length} 篇</span><span>最近更新 ${updated}</span></div>
+</div></section>
+<div class="shell">
+<h2 class="section-label">文章</h2>
+<ul class="post-list">
 ${
   posts
     .map(
-      (p) => `<li><a href="${p.url}"><span class="post-date">${fmtDate(p.date)}</span><div><h2 class="post-title">${esc(p.title)}</h2><p class="post-excerpt">${esc(p.summary)}…</p>${metaLine(p, { date: false })}</div></a></li>`,
+      (p, i) => `<li><a href="${p.url}"><span class="post-index">${String(i + 1).padStart(2, '0')}</span><div><h3 class="post-title">${esc(p.title)}</h3><p class="post-excerpt">${esc(p.summary)}…</p>${metaLine(p)}</div></a></li>`,
     )
     .join('\n')
 }
