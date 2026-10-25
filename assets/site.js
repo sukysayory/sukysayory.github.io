@@ -42,6 +42,15 @@ document.querySelectorAll('.theme-toggle').forEach((button) => {
   })
 })
 
+// 主页：大头像滚出视野后，导航小头像再出现，避免同屏出现两个
+const profileAvatar = document.querySelector('.profile-avatar')
+if (profileAvatar && document.body.classList.contains('on-profile')) {
+  new IntersectionObserver(
+    ([entry]) => document.body.classList.toggle('show-brand-avatar', !entry.isIntersecting),
+    { rootMargin: '-72px 0px 0px 0px' },
+  ).observe(profileAvatar)
+}
+
 const tocLinks = [...document.querySelectorAll('.toc a[href^="#"]')]
 if (tocLinks.length) {
   const targets = tocLinks
@@ -63,7 +72,7 @@ if (tocLinks.length) {
       const top = targets.find((t) => visible.has(t))
       if (top) mark(top.id)
     },
-    { rootMargin: '-5.5rem 0px -60% 0px', threshold: 0 },
+    { rootMargin: '-88px 0px -60% 0px', threshold: 0 },
   )
 
   targets.forEach((t) => observer.observe(t))

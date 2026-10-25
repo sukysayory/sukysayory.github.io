@@ -105,7 +105,7 @@ function layout({ body, title, description, active, toc }) {
 <link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="/assets/styles.css">
 </head>
-<body>
+<body${active === '/about/' ? ' class="on-profile"' : ''}>
 <a class="skip-link" href="#main">跳到正文</a>
 <header class="site-header">
   <div class="shell">
@@ -229,21 +229,54 @@ ${posts.length ? '' : '<p class="empty">还没有文章。</p>'}</div>`,
   }),
 )
 
-// 关于
+// 个人主页（沿用 /about/ 地址）
 const about = matter(readFileSync('content/about.md', 'utf8'))
+const selected = posts.slice(0, 3)
 write(
   'about',
   layout({
     active: '/about/',
     title: about.data.title || '关于',
-    body: `<div class="shell"><div class="article-layout"><article class="article"><header class="article-head"><h1>${esc(about.data.title || '关于')}</h1></header><hr class="divider"><div class="prose">${marked.parse(about.content)}</div></article></div></div>`,
+    description: site.description,
+    body: `<div class="shell"><div class="profile">
+  <aside class="profile-aside">
+    <div class="profile-avatar">${
+      site.avatar
+        ? `<img src="${esc(site.avatar)}" alt="${esc(site.author)}">`
+        : '<span aria-hidden="true">S</span>'
+    }</div>
+    <p class="profile-tagline">${esc(site.tagline)}</p>
+    <ul class="profile-links">
+      ${site.social.map((s) => `<li><a href="${s.href}">${esc(s.label)} <span aria-hidden="true">↗</span></a></li>`).join('\n      ')}
+      <li><a href="/archive/">全部文章 <span aria-hidden="true">→</span></a></li>
+    </ul>
+  </aside>
+  <div class="profile-main">
+    <h1 class="profile-title">关于我</h1>
+    <div class="prose">${marked.parse(about.content)}</div>
+    ${
+      selected.length
+        ? `<section class="profile-writing">
+      <p class="section-label">最近写的</p>
+      <ul class="profile-posts">
+        ${selected
+          .map(
+            (p) => `<li><a href="${p.url}"><time datetime="${p.date.toISOString()}">${fmtDate(p.date)}</time><span>${esc(p.title)}</span></a></li>`,
+          )
+          .join('\n        ')}
+      </ul>
+    </section>`
+        : ''
+    }
+    <p class="profile-colophon">本站用 Markdown 写作，由一段 Node 脚本生成静态页面，托管在 GitHub Pages。</p>
+  </div>
+</div></div>`,
   }),
 )
 
 // 资源与站点地图
-mkdirSync(`${OUT}/assets`, { recursive: true })
-cpSync('assets/styles.css', `${OUT}/assets/styles.css`)
-cpSync('assets/site.js', `${OUT}/assets/site.js`)
+rmSync(`${OUT}/assets`, { recursive: true, force: true })
+cpSync('assets', `${OUT}/assets`, { recursive: true })
 writeFileSync(
   `${OUT}/sitemap.xml`,
   `<?xml version="1.0" encoding="UTF-8"?>
