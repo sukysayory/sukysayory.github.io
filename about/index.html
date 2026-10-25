@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>关于 · sukysayory</title>
+<title>主页 · sukysayory</title>
 <meta name="description" content="sukysayory 的个人博客，记录读过的、写过的和踩过的坑。">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://sukysayory.github.io/about/">
-<meta property="og:title" content="关于 · sukysayory">
+<meta property="og:title" content="主页 · sukysayory">
 <meta property="og:description" content="sukysayory 的个人博客，记录读过的、写过的和踩过的坑。">
 <meta property="og:type" content="website">
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){}</script>
@@ -17,15 +17,15 @@
 <link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="/assets/styles.css">
 </head>
-<body>
+<body class="on-profile">
 <a class="skip-link" href="#main">跳到正文</a>
 <header class="site-header">
   <div class="shell">
-    <a class="brand" href="/">sukysayory</a>
+    <a class="brand" href="/"><img src="/assets/avatar.jpg" alt="">sukysayory</a>
     <nav class="site-nav">
         <a href="/">文章</a>
         <a href="/archive/">归档</a>
-        <a href="/about/" aria-current="page">关于</a>
+        <a href="/about/" aria-current="page">主页</a>
         <button class="theme-toggle" type="button">
       <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
       <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/></svg>
@@ -34,13 +34,31 @@
   </div>
 </header>
 <main id="main">
-<div class="shell"><div class="article-layout"><article class="article"><header class="article-head"><h1>关于</h1></header><hr class="divider"><div class="prose"><p>你好，我是 sukysayory。</p>
+<div class="shell"><div class="profile">
+  <aside class="profile-aside">
+    <div class="profile-avatar"><img src="/assets/avatar.jpg" alt="sukysayory"></div>
+    <p class="profile-tagline">记录一些值得记住的东西。</p>
+    <ul class="profile-links">
+      <li><a href="https://github.com/sukysayory">GitHub <span aria-hidden="true">↗</span></a></li>
+      <li><a href="/archive/">全部文章 <span aria-hidden="true">→</span></a></li>
+    </ul>
+  </aside>
+  <div class="profile-main">
+    <h1 class="profile-title">关于我</h1>
+    <div class="prose"><p>你好，我是 sukysayory。</p>
 <p>这里存放一些随手记下的东西：读过的、写过的、踩过的坑。文字以中文为主，偶尔夹一些英文。</p>
-<!-- 想加自我介绍、在做的事、联系方式，直接改这一页的 Markdown 即可。 --><h2>联系</h2>
-<ul>
-<li>GitHub：<a href="https://github.com/sukysayory">@sukysayory</a></li>
-</ul>
-</div></article></div></div>
+<p>我更愿意把一件事慢慢说清楚，而不是赶在热点上。这个博客没有评论区和推荐算法，写下来的东西按时间安静地排在一起。</p>
+</div>
+    <section class="profile-writing">
+      <p class="section-label">最近写的</p>
+      <ul class="profile-posts">
+        <li><a href="/posts/first-post/"><time datetime="2025-10-19T21:00:00.000Z">2025-10-19</time><span>滕王阁序</span></a></li>
+        <li><a href="/posts/hello-world/"><time datetime="2025-10-19T00:00:00.000Z">2025-10-19</time><span>Hello World</span></a></li>
+      </ul>
+    </section>
+    <p class="profile-colophon">本站用 Markdown 写作，由一段 Node 脚本生成静态页面，托管在 GitHub Pages。</p>
+  </div>
+</div></div>
 </main>
 <footer class="site-footer">
   <div class="shell">
