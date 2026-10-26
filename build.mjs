@@ -103,6 +103,7 @@ function layout({ body, title, description, active, toc }) {
 <link rel="preconnect" href="https://fonts.loli.net">
 <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap">
+<link rel="alternate" type="application/rss+xml" title="${esc(site.title)}" href="/feed.xml">
 <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body${active === '/about/' ? ' class="on-profile"' : ''}>
@@ -286,6 +287,33 @@ ${[...posts.map((p) => p.url), '/archive/', '/about/']
     .map((u) => `  <url><loc>${site.url}${u}</loc></url>`)
     .join('\n')}
 </urlset>
+`,
+)
+writeFileSync(
+  `${OUT}/feed.xml`,
+  `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>${esc(site.title)}</title>
+  <link>${site.url}/</link>
+  <atom:link href="${site.url}/feed.xml" rel="self" type="application/rss+xml"/>
+  <description>${esc(site.description)}</description>
+  <language>zh-CN</language>
+  <lastBuildDate>${(posts[0]?.date ?? new Date()).toUTCString()}</lastBuildDate>
+${posts
+  .map(
+    (p) => `  <item>
+    <title>${esc(p.title)}</title>
+    <link>${site.url}${p.url}</link>
+    <guid isPermaLink="true">${site.url}${p.url}</guid>
+    <pubDate>${p.date.toUTCString()}</pubDate>
+    <description>${esc(p.summary)}</description>
+${p.tags.map((t) => `    <category>${esc(t)}</category>`).join('\n')}
+  </item>`,
+  )
+  .join('\n')}
+</channel>
+</rss>
 `,
 )
 writeFileSync(`${OUT}/robots.txt`, `User-agent: *\nAllow: /\nSitemap: ${site.url}/sitemap.xml\n`)

@@ -67,5 +67,5 @@ assets/styles.css   全部样式（含明暗主题变量）
 assets/site.js      主题切换 + 目录高亮
 build.mjs           生成器
 serve.mjs           本地预览服务器
-dist/               构建产物
+dist/               构建产物（含 feed.xml 订阅源）
 ```

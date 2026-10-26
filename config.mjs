@@ -11,5 +11,8 @@ export const site = {
     { label: '归档', href: '/archive/' },
     { label: '主页', href: '/about/' },
   ],
-  social: [{ label: 'GitHub', href: 'https://github.com/sukysayory' }],
+  social: [
+    { label: 'GitHub', href: 'https://github.com/sukysayory' },
+    { label: 'RSS', href: '/feed.xml' },
+  ],
 }
