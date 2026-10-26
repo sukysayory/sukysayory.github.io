@@ -28,7 +28,12 @@ function setTheme(next, button) {
   const y = top + height / 2
   const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
 
-  document.startViewTransition(() => apply(next)).ready.then(() => {
+  // 主题切换走 root 的圆形展开，暂时摘掉命名元素避免它们单独淡入
+  document.body.classList.add('theme-switching')
+  const transition = document.startViewTransition(() => apply(next))
+  transition.finished.finally(() => document.body.classList.remove('theme-switching'))
+
+  transition.ready.then(() => {
     root.animate(
       { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
       { duration: 520, easing: 'cubic-bezier(.22,1,.36,1)', pseudoElement: '::view-transition-new(root)' },
