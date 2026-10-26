@@ -109,7 +109,7 @@ function layout({ body, title, description, active, toc }) {
 <a class="skip-link" href="#main">跳到正文</a>
 <header class="site-header">
   <div class="shell">
-    <a class="brand" href="/">${site.avatar ? `<img src="${site.avatar}" alt="">` : ''}${esc(site.title)}</a>
+    <a class="brand" href="/">${site.avatar ? `<img src="${site.avatar}" alt="" width="26" height="26">` : ''}<span class="brand-name">${esc(site.title)}</span></a>
     <nav class="site-nav">
         ${nav}
         ${toggle}
@@ -242,9 +242,10 @@ write(
   <aside class="profile-aside">
     <div class="profile-avatar">${
       site.avatar
-        ? `<img src="${esc(site.avatar)}" alt="${esc(site.author)}">`
+        ? `<img src="${esc(site.avatar)}" alt="${esc(site.author)}" width="400" height="400">`
         : '<span aria-hidden="true">S</span>'
     }</div>
+    <h1 class="profile-name">${esc(site.title)}</h1>
     <p class="profile-tagline">${esc(site.tagline)}</p>
     <ul class="profile-links">
       ${site.social.map((s) => `<li><a href="${s.href}">${esc(s.label)} <span aria-hidden="true">↗</span></a></li>`).join('\n      ')}
@@ -252,7 +253,7 @@ write(
     </ul>
   </aside>
   <div class="profile-main">
-    <h1 class="profile-title">关于我</h1>
+    <p class="section-label">关于</p>
     <div class="prose">${marked.parse(about.content)}</div>
     ${
       selected.length
